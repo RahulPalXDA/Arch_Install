@@ -22,6 +22,7 @@ setup_user() {
 	echo "Enter Passeord for Root"
 	passwd
 	useradd -m -g users -G wheel -s /bin/bash rahul
+	chfn rahul
 	echo "Enter Password for user rahul"
 	passwd rahul
 	EDITOR=nano visudo
