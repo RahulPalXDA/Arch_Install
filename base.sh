@@ -10,6 +10,7 @@ mount_parts() {
 	mount /dev/nvme0n1p3 /mnt/home
 	mkdir /mnt/boot
 	mkdir /mnt/boot/efi
+	mount /dev/nvme0n1p1 /mnt/boot/efi
 }
 base_install() {
 	pacstrap -i /mnt base base-devel linux-lts linux-firmware sudo nano git ntfs-3g ttf-dejavu ttf-indic-otf noto-fonts-emoji xdg-user-dirs grub efibootmgr networkmanager
