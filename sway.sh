@@ -1,5 +1,5 @@
 base_packages() {
-	sudo pacman -S sway wayland foot swayimg swaylock grim brightnessctl pulseaudio pulseaudio-alsa alsa-utils wofi swaybg
+	sudo pacman -S sway wayland foot swayimg swaylock grim brightnessctl pulseaudio pulseaudio-alsa alsa-utils wofi swaybg libnotify dunst
 }
 setup_tty() {
 	echo "if [ "$(tty)" = "/dev/tty1" ]; then" >> ~/.bash_profile
