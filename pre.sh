@@ -29,6 +29,7 @@ setup_user() {
 }
 setup_grub() {
 	grub-install --target=x86_64-efi --bootloader-id=GRUB --efi-directory=/boot/efi --removable
+	sed -i 's/GRUB_TIMEOUT_STYLE=menu/GRUB_TIMEOUT_STYLE=hidden/g' /etc/default/grub
 	grub-mkconfig -o /boot/grub/grub.cfg
 }
 set_locale
