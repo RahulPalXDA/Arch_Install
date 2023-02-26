@@ -1,5 +1,5 @@
 base_packages() {
-	sudo pacman -S sway wayland foot swayimg swaylock grim brightnessctl pipewire-pulse pipewire-alsa alsa-utils wofi swaybg libnotify dunst
+	sudo pacman -S sway wayland xorg-xwayland polkit foot swayimg swaylock grim brightnessctl pipewire-pulse pipewire-alsa alsa-utils wofi swaybg libnotify dunst
 }
 setup_tty() {
 	echo "" >> ~/.bash_profile
