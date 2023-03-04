@@ -5,7 +5,7 @@ config_git() {
 	git config --global core.editor nvim
 }
 install_utilities() {
-	sudo pacman -Syy firefox mpv ranger moc clang android-tools neovim
+	sudo pacman -Syy firefox mpv ranger moc clang android-tools neovim bash-completion
 	git clone --depth=1 https://aur.archlinux.org/yay.git ~/Desktop/yay
 	cd ~/Desktop/yay/ && makepkg -si
 	cd ~/Desktop/ && rm -rf yay
