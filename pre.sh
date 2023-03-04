@@ -32,9 +32,17 @@ setup_grub() {
 	sed -i 's/GRUB_TIMEOUT_STYLE=menu/GRUB_TIMEOUT_STYLE=hidden/g' /etc/default/grub
 	grub-mkconfig -o /boot/grub/grub.cfg
 }
+setup_swap() {
+	dd if=/dev/zero of=/swapfile bs=1M count=8192 status=progress
+	chmod 0600 /swapfile
+	mkswap -U clear /swapfile
+	swapon /swapfile
+	echo -e "/swapfile\tnone\tswap\tpri=10\t0 0" >> /etc/fstab
+}
 set_locale
 set_date
 set_hostname
 enable_networkmanager
 setup_user
 setup_grub
+setup_swap
