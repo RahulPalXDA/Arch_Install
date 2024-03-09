@@ -28,7 +28,10 @@ setup_user() {
 	chfn -f $FULLNAME $USERNAME
 	echo -e "$PASSWORD\n$PASSWORD" | sudo passwd $USERNAME
  	echo -e "$PASSWORD\n$PASSWORD" | sudo passwd root
-	EDITOR=nano visudo
+	cp /etc/sudoers /tmp/sudoers
+ 	sed -i 's/# %wheel ALL=(ALL:ALL) ALL/%wheel ALL=(ALL:ALL) ALL/g' /tmp/sudoers
+  	cp /tmp/sudoers /etc/sudoers
+   	rm /tmp/sudoers
 }
 setup_swap() {
 	dd if=/dev/zero of=/swapfile bs=1M count=8192 status=progress
