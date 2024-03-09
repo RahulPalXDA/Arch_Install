@@ -1,4 +1,9 @@
 #!/bin/bash
+
+USERNAME='rahul'
+FULLNAME='Rahul Pal XDA'
+PASSWORD='2705'
+
 set_locale() {
 	sed -i 's/#en_US.UTF-8/en_US.UTF-8/g' /etc/locale.gen
 	locale-gen
@@ -19,12 +24,10 @@ enable_networkmanager() {
 	systemctl enable NetworkManager
 }
 setup_user() {
-	echo "Enter Passeord for Root"
-	passwd
-	useradd -m -g users -G wheel -s /bin/bash rahul
-	chfn rahul
-	echo "Enter Password for user rahul"
-	passwd rahul
+	useradd -m -g users -G wheel -s /bin/bash $USERNAME
+	chfn -f $FULLNAME $USERNAME
+	echo -e "$PASSWORD\n$PASSWORD" | sudo passwd $USERNAME
+ 	echo -e "$PASSWORD\n$PASSWORD" | sudo passwd root
 	EDITOR=nano visudo
 }
 setup_swap() {
