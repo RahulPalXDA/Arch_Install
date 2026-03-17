@@ -13,7 +13,7 @@ mount_parts() {
 	mount /dev/nvme0n1p1 /mnt/boot/efi
 }
 base_install() {
-	pacstrap -i /mnt base base-devel linux-lts linux-firmware sudo nano git ntfs-3g ttf-dejavu ttf-indic-otf noto-fonts-emoji xdg-user-dirs grub efibootmgr networkmanager
+	pacstrap -i /mnt base base-devel linux-zen linux-firmware amd-ucode mesa xf86-video-amdgpu vulkan-radeon sudo nano git ntfs-3g ttf-dejavu ttf-indic-otf noto-fonts-emoji xdg-user-dirs grub efibootmgr networkmanager
 }
 gen_fstab () {
 	genfstab -U -p /mnt >> /mnt/etc/fstab

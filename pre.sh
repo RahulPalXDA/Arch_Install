@@ -10,21 +10,21 @@ set_date() {
 	date
 }
 set_hostname() {
-	echo "msi-b10mw" >> /etc/hostname
+	echo "steam-mahine" >> /etc/hostname
 	echo "127.0.0.1    localhost" >> /etc/hosts
 	echo "::1          localhost" >> /etc/hosts
-	echo "127.0.1.1    msi-b10mw" >> /etc/hosts
+	echo "127.0.1.1    steam-mahine" >> /etc/hosts
 }
 enable_networkmanager() {
 	systemctl enable NetworkManager
 }
 setup_user() {
-	echo "Enter Passeord for Root"
+	echo "Enter Password for Root"
 	passwd
-	useradd -m -g users -G wheel -s /bin/bash rahul
-	chfn rahul
-	echo "Enter Password for user rahul"
-	passwd rahul
+	useradd -m -g users -G wheel,video,audio,input,games,power,storage -s /bin/bash gamer
+	chfn gamer
+	echo "Enter Password for Gamer"
+	passwd gamer
 	EDITOR=nano visudo
 }
 setup_grub() {
@@ -39,10 +39,38 @@ setup_swap() {
 	swapon /swapfile
 	echo -e "/swapfile\tnone\tswap\tpri=10\t0 0" >> /etc/fstab
 }
+enable_multilib() {
+	sed -i "/\[multilib\]/,/Include/"'s/^#//' /etc/pacman.conf
+	pacman -Sy
+}
+install_gaming() {
+	pacman -S --noconfirm lib32-mesa lib32-vulkan-radeon pipewire pipewire-audio pipewire-alsa pipewire-pulse pipewire-jack wireplumber gamescope steam brightnessctl xorg-xwayland bluez bluez-utils
+	systemctl enable bluetooth
+}
+setup_autologin() {
+	mkdir -p /etc/systemd/system/getty@tty1.service.d/
+	cat <<EOF > /etc/systemd/system/getty@tty1.service.d/override.conf
+[Service]
+ExecStart=
+ExecStart=-/usr/bin/agetty --autologin gamer --noclear %I \$TERM
+EOF
+}
+setup_steam_session() {
+	cat <<EOF > /home/gamer/.bash_profile
+if [[ -z \$DISPLAY && \$(tty) == /dev/tty1 ]]; then
+	gamescope -f -w 1280 -h 720 -W 1920 -H 1080 -r 60 -- steam -gamepadui -steamos3
+fi
+EOF
+	chown gamer:users /home/gamer/.bash_profile
+}
 set_locale
 set_date
 set_hostname
 enable_networkmanager
+enable_multilib
+install_gaming
+setup_autologin
 setup_user
+setup_steam_session
 setup_grub
 setup_swap
